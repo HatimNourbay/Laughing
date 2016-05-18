@@ -28,10 +28,6 @@ import okhttp3.Response;
 
 public class MainActivity extends AppCompatActivity {
 
-
-
-    List<ArticleItem> articleItemList;
-
     RecyclerView contactList;
 
     ArticleAdapter articleAdapter;
@@ -56,6 +52,14 @@ public class MainActivity extends AppCompatActivity {
 
     private void refreshRecyclerview() {
         Context articleContext = getApplicationContext();
+        if (articleContext instanceof ArticleApplication){
+            artList = ((ArticleApplication) articleContext).articleItems;
+            articleAdapter = new ArticleAdapter(artList);
+            contactList.setAdapter(articleAdapter);
+            //articleAdapter.notifyDataSetChanged();
+        }
+
+
     }
 
 
@@ -68,12 +72,15 @@ public class MainActivity extends AppCompatActivity {
         butt = (Button)findViewById(R.id.hello_button);
 
         contactList = (RecyclerView) findViewById(R.id.cont_list);
-
-        articleAdapter = new ArticleAdapter(artList);
         RecyclerView.LayoutManager aLayoutManager = new LinearLayoutManager(this);
         contactList.setLayoutManager(aLayoutManager);
         contactList.setItemAnimator(new DefaultItemAnimator());
+
+
+        /*
+        articleAdapter = new ArticleAdapter(artList);
         contactList.setAdapter(articleAdapter);
+        */
 
         //RSSDownload(McgURL);
 
