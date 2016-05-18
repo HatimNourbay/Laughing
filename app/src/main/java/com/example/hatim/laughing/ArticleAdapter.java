@@ -1,5 +1,7 @@
 package com.example.hatim.laughing;
 
+import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,10 +20,28 @@ public class ArticleAdapter extends RecyclerView.Adapter<ArticleAdapter.ViewHold
 
     public class ViewHolderArticle extends RecyclerView.ViewHolder {
         public TextView title;
+        public TextView creator;
+        public TextView description;
+        public String url;
+
+
 
         public ViewHolderArticle(View view) {
             super(view);
             title = (TextView) view.findViewById(R.id.artTitle);
+            creator = (TextView) view.findViewById(R.id.artCreator);
+            description = (TextView) view.findViewById(R.id.artDescription);
+
+
+            view.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent webIntent = new Intent(v.getContext(),DetailArticleActivity.class);
+                    webIntent.putExtra("lien",url);
+                    v.getContext().startActivity(webIntent);
+                }
+            });
+
         }
     }
 
@@ -41,6 +61,9 @@ public class ArticleAdapter extends RecyclerView.Adapter<ArticleAdapter.ViewHold
     public void onBindViewHolder(ViewHolderArticle holder, int position) {
         ArticleItem article = articleList.get(position);
         holder.title.setText(article.title);
+        holder.creator.setText(article.creator);
+        holder.description.setText(article.description);
+        holder.url = article.link;
     }
 
     @Override
